@@ -1,0 +1,143 @@
+{
+	"name": "DS_boston_src",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStoragels",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "servicosbostonzip"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "case_enquiry_id",
+				"type": "String"
+			},
+			{
+				"name": "open_dt",
+				"type": "String"
+			},
+			{
+				"name": "sla_target_dt",
+				"type": "String"
+			},
+			{
+				"name": "closed_dt",
+				"type": "String"
+			},
+			{
+				"name": "on_time",
+				"type": "String"
+			},
+			{
+				"name": "case_status",
+				"type": "String"
+			},
+			{
+				"name": "closure_reason",
+				"type": "String"
+			},
+			{
+				"name": "case_title",
+				"type": "String"
+			},
+			{
+				"name": "subject",
+				"type": "String"
+			},
+			{
+				"name": "reason",
+				"type": "String"
+			},
+			{
+				"name": "type",
+				"type": "String"
+			},
+			{
+				"name": "queue",
+				"type": "String"
+			},
+			{
+				"name": "department",
+				"type": "String"
+			},
+			{
+				"name": "submitted_photo",
+				"type": "String"
+			},
+			{
+				"name": "closed_photo",
+				"type": "String"
+			},
+			{
+				"name": "location",
+				"type": "String"
+			},
+			{
+				"name": "fire_district",
+				"type": "String"
+			},
+			{
+				"name": "pwd_district",
+				"type": "String"
+			},
+			{
+				"name": "city_council_district",
+				"type": "String"
+			},
+			{
+				"name": "police_district",
+				"type": "String"
+			},
+			{
+				"name": "neighborhood",
+				"type": "String"
+			},
+			{
+				"name": "neighborhood_services_district",
+				"type": "String"
+			},
+			{
+				"name": "ward",
+				"type": "String"
+			},
+			{
+				"name": "precinct",
+				"type": "String"
+			},
+			{
+				"name": "location_street_name",
+				"type": "String"
+			},
+			{
+				"name": "location_zipcode",
+				"type": "String"
+			},
+			{
+				"name": "latitude",
+				"type": "String"
+			},
+			{
+				"name": "longitude",
+				"type": "String"
+			},
+			{
+				"name": "geom_4326",
+				"type": "String"
+			},
+			{
+				"name": "source",
+				"type": "String"
+			}
+		]
+	}
+}
