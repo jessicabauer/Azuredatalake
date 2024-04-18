@@ -1,0 +1,234 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Nome do Data Factory",
+			"defaultValue": "servicosbostonadf1"
+		},
+		"AzureBlobStoragels_connectionString": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'connectionString' de 'AzureBlobStoragels'"
+		},
+		"AzureDataLakeStoragels_accountKey": {
+			"type": "secureString",
+			"metadata": "Cadeia de caracteres segura para 'accountKey' de 'AzureDataLakeStoragels'"
+		},
+		"AzureDataLakeStoragels_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://datalakeboston1.dfs.core.windows.net/"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureBlobStoragels')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobStorage",
+				"typeProperties": {
+					"connectionString": "[parameters('AzureBlobStoragels_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/AzureDataLakeStoragels')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureBlobFS",
+				"typeProperties": {
+					"url": "[parameters('AzureDataLakeStoragels_properties_typeProperties_url')]",
+					"accountKey": {
+						"type": "SecureString",
+						"value": "[parameters('AzureDataLakeStoragels_accountKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_boston_src')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureBlobStoragels",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "servicosbostonzip"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": [
+					{
+						"name": "case_enquiry_id",
+						"type": "String"
+					},
+					{
+						"name": "open_dt",
+						"type": "String"
+					},
+					{
+						"name": "sla_target_dt",
+						"type": "String"
+					},
+					{
+						"name": "closed_dt",
+						"type": "String"
+					},
+					{
+						"name": "on_time",
+						"type": "String"
+					},
+					{
+						"name": "case_status",
+						"type": "String"
+					},
+					{
+						"name": "closure_reason",
+						"type": "String"
+					},
+					{
+						"name": "case_title",
+						"type": "String"
+					},
+					{
+						"name": "subject",
+						"type": "String"
+					},
+					{
+						"name": "reason",
+						"type": "String"
+					},
+					{
+						"name": "type",
+						"type": "String"
+					},
+					{
+						"name": "queue",
+						"type": "String"
+					},
+					{
+						"name": "department",
+						"type": "String"
+					},
+					{
+						"name": "submitted_photo",
+						"type": "String"
+					},
+					{
+						"name": "closed_photo",
+						"type": "String"
+					},
+					{
+						"name": "location",
+						"type": "String"
+					},
+					{
+						"name": "fire_district",
+						"type": "String"
+					},
+					{
+						"name": "pwd_district",
+						"type": "String"
+					},
+					{
+						"name": "city_council_district",
+						"type": "String"
+					},
+					{
+						"name": "police_district",
+						"type": "String"
+					},
+					{
+						"name": "neighborhood",
+						"type": "String"
+					},
+					{
+						"name": "neighborhood_services_district",
+						"type": "String"
+					},
+					{
+						"name": "ward",
+						"type": "String"
+					},
+					{
+						"name": "precinct",
+						"type": "String"
+					},
+					{
+						"name": "location_street_name",
+						"type": "String"
+					},
+					{
+						"name": "location_zipcode",
+						"type": "String"
+					},
+					{
+						"name": "latitude",
+						"type": "String"
+					},
+					{
+						"name": "longitude",
+						"type": "String"
+					},
+					{
+						"name": "geom_4326",
+						"type": "String"
+					},
+					{
+						"name": "source",
+						"type": "String"
+					}
+				]
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureBlobStoragels')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ds_boston_sink')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStoragels",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "bronze",
+						"fileSystem": "dadosboston"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStoragels')]"
+			]
+		}
+	]
+}
