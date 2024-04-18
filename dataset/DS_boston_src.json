@@ -10,6 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
+				"fileName": "boston.zip",
 				"container": "servicosbostonzip"
 			},
 			"columnDelimiter": ",",
